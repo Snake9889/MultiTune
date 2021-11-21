@@ -43,9 +43,6 @@
          <pointsize>12</pointsize>
         </font>
        </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
        <property name="text">
         <string/>
        </property>
@@ -57,9 +54,6 @@
         <font>
          <pointsize>12</pointsize>
         </font>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
