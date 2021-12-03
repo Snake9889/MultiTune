@@ -51,7 +51,7 @@ if __name__ == "__main__":
     settingsControl = SettingsControl()
 
     mw = MainWindow(data_source, data_proc_X, data_proc_Z, settingsControl, bpm_name_parsed)
-    mw.setWindowTitle('BTMS ({})'.format(bpm_name_parsed))
+    mw.setWindowTitle('TDP ({})'.format(bpm_name_parsed))
 
     icon_path = os.path.dirname(os.path.abspath(__file__))
     mw_icon = QIcon()

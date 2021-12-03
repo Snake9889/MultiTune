@@ -6,8 +6,7 @@ from PyQt5.QtCore import pyqtSignal, QRectF, Qt, QSettings, QSize, QPoint
 from PyQt5 import uic
 import pyqtgraph as pg
 from helpwidget import HelpWidget
-from phasewidget import PhaseWidget
-
+#from phasewidget import PhaseWidget
 from statuswidget import StatusWidget
 
 
@@ -34,18 +33,18 @@ class MainWindow(QMainWindow):
             old_statusWidget.deleteLater()
             self.statusWidget = new_statusWidget
 
-        else:
-            """ Creating phase button """
-            old_Widget = self.statusWidget
-            self.phasebtn = QPushButton('Phase', self)
-            self.phasebtn.setCheckable(True)
-            self.phasebtn.setStyleSheet("QPushButton:checked {color: black; background-color: green;}")
+        # else:
+            # """ Creating phase button """
+            # old_Widget = self.statusWidget
+            # self.phasebtn = QPushButton('Phase', self)
+            # self.phasebtn.setCheckable(True)
+            # self.phasebtn.setStyleSheet("QPushButton:checked {color: black; background-color: green;}")
             
-            self.phase_widget = PhaseWidget(os.path.join(ui_path))
-            self.phasebtn.clicked.connect(self.phase_widget.show)
+            # self.phase_widget = PhaseWidget(os.path.join(ui_path))
+            # self.phasebtn.clicked.connect(self.phase_widget.show)
 
-            self.ui.verticalLayout.replaceWidget(old_Widget, self.phasebtn)
-            old_Widget.deleteLater()
+            # self.ui.verticalLayout.replaceWidget(old_Widget, self.phasebtn)
+            # old_Widget.deleteLater()
 
         self.images_list = []
         self.x_rect = None

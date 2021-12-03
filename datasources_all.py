@@ -138,21 +138,25 @@ class BPMDataAll(BPMTemplate):
 
     def reshaping_data(self):
         """   """
-        self.dataT = np.arange(0, len(self.BPM1.dataT) * 4, dtype=float)
+        self.dataT = self.BPM1.dataT
         self.data_len = len(self.dataT)
 
-        if self.particles == "e-":
-            self.dataX = self.reshaping_arrays(self.BPM4.dataX, self.BPM1.dataX, self.BPM2.dataX, self.BPM3.dataX)
-            self.dataZ = self.reshaping_arrays(self.BPM4.dataZ, self.BPM1.dataZ, self.BPM2.dataZ, self.BPM3.dataZ)
-            self.dataI = self.reshaping_arrays(self.BPM4.dataI, self.BPM1.dataI, self.BPM2.dataI, self.BPM3.dataI)
+        self.dataX = self.reshaping_arrays(self.BPM1.dataX, self.BPM2.dataX, self.BPM3.dataX, self.BPM4.dataX)
+        self.dataZ = self.reshaping_arrays(self.BPM1.dataZ, self.BPM2.dataZ, self.BPM3.dataZ, self.BPM4.dataZ)
+        self.dataI = self.reshaping_arrays(self.BPM1.dataI, self.BPM2.dataI, self.BPM3.dataI, self.BPM4.dataI)
 
-        elif self.particles == "e+":
-            self.dataX = self.reshaping_arrays(self.BPM3.dataX, self.BPM2.dataX, self.BPM1.dataX, self.BPM4.dataX)
-            self.dataZ = self.reshaping_arrays(self.BPM3.dataZ, self.BPM2.dataZ, self.BPM1.dataZ, self.BPM4.dataZ)
-            self.dataI = self.reshaping_arrays(self.BPM3.dataI, self.BPM2.dataI, self.BPM1.dataI, self.BPM4.dataI)
+        # if self.particles == "e-":
+            # self.dataX = self.reshaping_arrays(self.BPM4.dataX, self.BPM1.dataX, self.BPM2.dataX, self.BPM3.dataX)
+            # self.dataZ = self.reshaping_arrays(self.BPM4.dataZ, self.BPM1.dataZ, self.BPM2.dataZ, self.BPM3.dataZ)
+            # self.dataI = self.reshaping_arrays(self.BPM4.dataI, self.BPM1.dataI, self.BPM2.dataI, self.BPM3.dataI)
 
-        else:
-            pass
+        # elif self.particles == "e+":
+            # self.dataX = self.reshaping_arrays(self.BPM3.dataX, self.BPM2.dataX, self.BPM1.dataX, self.BPM4.dataX)
+            # self.dataZ = self.reshaping_arrays(self.BPM3.dataZ, self.BPM2.dataZ, self.BPM1.dataZ, self.BPM4.dataZ)
+            # self.dataI = self.reshaping_arrays(self.BPM3.dataI, self.BPM2.dataI, self.BPM1.dataI, self.BPM4.dataI)
+
+        # else:
+            # pass
 
         self.everyting_ok(self.statusWidget.status_4)
         self.data_ready.emit(self)
@@ -160,12 +164,12 @@ class BPMDataAll(BPMTemplate):
 
     def reshaping_arrays(self, M1, M2, M3, M4):
         """   """
-        newMass = np.zeros(len(M1)*4)
-        for i in range(len(M1)):
-            newMass[4*i + 0] = M1[i]
-            newMass[4*i + 1] = M2[i]
-            newMass[4*i + 2] = M3[i]
-            newMass[4*i + 3] = M4[i]
+        newMass = np.array(M1,M2,M3,M4)
+        # for i in range(len(M1)):
+            # newMass[4*i + 0] = M1[i]
+            # newMass[4*i + 1] = M2[i]
+            # newMass[4*i + 2] = M3[i]
+            # newMass[4*i + 3] = M4[i]
 
         return(newMass)
 
