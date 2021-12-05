@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>90</height>
+    <width>171</width>
+    <height>48</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,20 +21,6 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QComboBox" name="particles_type">
-     <item>
-      <property name="text">
-       <string>e-</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>e+</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="status_1">
@@ -86,7 +72,7 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

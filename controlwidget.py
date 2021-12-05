@@ -10,6 +10,7 @@ import os.path
 class ControlWidget(QWidget):
     """   """
     window_changed_str = pyqtSignal(str)
+    vector_changed_int = pyqtSignal(int)
     method_changed_str = pyqtSignal(str)
     boards_changed = pyqtSignal(object)
     scale_changed_obj = pyqtSignal(object)
@@ -21,13 +22,15 @@ class ControlWidget(QWidget):
         super(ControlWidget, self).__init__(parent)
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
-        self.ui = uic.loadUi(os.path.join(ui_path, 'ControlWidget.ui'), self)
+        self.ui = uic.loadUi(os.path.join(ui_path, 'ControlWidget_new.ui'), self)
 
         argument_parser = TerminalParser()
 
         self.window = "None"
         self.method = argument_parser.method_name_parsed
-        self.bpm = argument_parser.bpm_name_parsed
+        self.v1 = argument_parser.v1_parsed
+
+        #self.bpm = argument_parser.bpm_name_parsed
         self.boards = None
         self.lboard = 0.01
         self.rboard = 0.5
@@ -52,6 +55,7 @@ class ControlWidget(QWidget):
         self.rboardSBox.setValue(0.3)
 
         self.checkWindowBox.currentIndexChanged.connect(self.on_window_checked)
+        self.checkSingularBox.currentIndexChanged.connect(self.on_vect_checked)
         self.buttonGroup.buttonClicked['int'].connect(self.on_method_checked)
         self.lboardSBox.valueChanged.connect(self.on_lboardsbox_changed)
         self.rboardSBox.valueChanged.connect(self.on_rboardsbox_changed)
@@ -69,6 +73,10 @@ class ControlWidget(QWidget):
             self.window = "None"
 
         self.window_changed_str.emit(self.window)
+
+    def on_vect_checked(self, state):
+        """   """
+        self.vector_changed_int.emit(state)
 
     def on_method_checked(self, state):
         """   """

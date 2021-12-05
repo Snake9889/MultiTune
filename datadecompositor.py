@@ -7,12 +7,12 @@ import math
 from command_parser import TerminalParser
 
 
-class DataProcessor(QObject):
+class DataDecompositor(QObject):
     """   """
     data_decomposed = pyqtSignal(object)
 
-    def __init__(self, data_type='X', data_len=1024, parent=None):
-        super(DataProcessor, self).__init__(parent)
+    def __init__(self, data_len=1024, parent=None):
+        super(DataDecompositor, self).__init__(parent)
 
         self.data_len = data_len
 
@@ -26,8 +26,8 @@ class DataProcessor(QObject):
         #self.data_to_process = None
         self.sng = None
         self.U = None
-        self.data_processed_X = None
-        self.data_processed_Z = None
+        self.data_decomposed_X = None
+        self.data_decomposed_Z = None
 
         self.warning = 0
         self.warningText = ""
@@ -48,16 +48,16 @@ class DataProcessor(QObject):
         # else:
             # return
 
-        self.data_processed_X = self.SVD(self.dataX)
-        self.data_processed_X = self.SVD(self.dataZ)
+        self.data_decomposed_X = self.SVD(self.dataX)
+        self.data_decomposed_Z = self.SVD(self.dataZ)
 
         self.data_decomposed.emit(self)
 
     def SVD(self, M1):
         """   """
-        U, sng, data_processed = None
-        U, sng, data_processed = lg.svd(M1)
-        return (data_processed)
+        U, sng, data_decomposed= None
+        U, sng, data_decomposed = lg.svd(M1)
+        return (data_decomposed)
 
 
 

@@ -339,7 +339,7 @@
        <number>3</number>
       </property>
       <item>
-       <widget class="ControlWidget" name="controlWidgetX" native="true">
+       <widget class="ControlWidget" name="controlWidget1" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -358,7 +358,7 @@
        </widget>
       </item>
       <item>
-       <widget class="ControlWidget" name="controlWidgetZ" native="true">
+       <widget class="ControlWidget" name="controlWidget2" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -405,7 +405,7 @@
      <x>0</x>
      <y>0</y>
      <width>612</width>
-     <height>30</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

@@ -42,7 +42,7 @@ class BPMDataAll(BPMTemplate):
         self.BPM3 = BPMData("bpm03")
         self.BPM4 = BPMData("bpm04")
 
-        self.statusWidget.particles_type.currentIndexChanged.connect(self.on_particles_checked)
+        #self.statusWidget.particles_type.currentIndexChanged.connect(self.on_particles_checked)
 
         self.BPM1.data_ready.connect(self.on_data_ready)
         self.BPM2.data_ready.connect(self.on_data_ready)
@@ -164,7 +164,9 @@ class BPMDataAll(BPMTemplate):
 
     def reshaping_arrays(self, M1, M2, M3, M4):
         """   """
-        newMass = np.array(M1,M2,M3,M4)
+        print(M1.shape)
+        newMass = np.hstack((M1,M2,M3,M4))
+        print(newMass.shape)
         # for i in range(len(M1)):
             # newMass[4*i + 0] = M1[i]
             # newMass[4*i + 1] = M2[i]
@@ -190,7 +192,7 @@ class BPMDataAll(BPMTemplate):
         self.particles = settings.value("particles", "e-")
         settings.endGroup()
 
-        self.statusWidget.particles_type.setCurrentText(self.particles)
+        #self.statusWidget.particles_type.setCurrentText(self.particles)
 
     def save_settings(self):
         """   """

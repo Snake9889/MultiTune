@@ -93,7 +93,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="checkWindowBox_2">
+         <widget class="QComboBox" name="checkSingularBox">
           <item>
            <property name="text">
             <string>First_vector</string>
@@ -112,16 +112,6 @@
           <item>
            <property name="text">
             <string>Fourth_vector</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Fifth_vector</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Sixth_vector</string>
            </property>
           </item>
          </widget>
