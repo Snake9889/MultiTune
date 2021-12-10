@@ -10,16 +10,17 @@ class DataProcessor(QObject):
     """   """
     data_processed = pyqtSignal(object)
 
-    def __init__(self, data_type='X', data_len=1024, parent=None):
+    def __init__(self, data_vector=1, data_len=1024, parent=None):
         super(DataProcessor, self).__init__(parent)
 
-        self.type_to_process = data_type
+        #self.type_to_process = data_type
         argument_parser = TerminalParser()
 
         self.windowType = 'None'
         self.data_len = data_len
         self.algType = argument_parser.method_name_parsed
-        self.bpm = argument_parser.bpm_name_parsed
+        #self.bpm = argument_parser.bpm_name_parsed
+        self.vect_num = data_vector
         self.window = None
 
         self.regen_wind(self.windowType)
@@ -35,8 +36,10 @@ class DataProcessor(QObject):
 
         self.fftwT = None
 
-        self.data_to_process = None
-        self.fftw_to_process = None
+        self.data_to_process_X = None
+        self.data_to_process_Z = None
+        self.fftw_to_process_X = None
+        self.fftw_to_process_Z = None
 
         self.alpha = None
         self.falpha = None
@@ -83,24 +86,31 @@ class DataProcessor(QObject):
         self.dataZ = data_source.dataZ
         self.dataI = data_source.dataI
 
-        if self.type_to_process == 'X':
-            self.data_to_process = self.dataX
-        elif self.type_to_process == 'Z':
-            self.data_to_process = self.dataZ
-        else:
-            return
+        self.data_to_process_X = self.dataX[:, self.vect_num]
+        self.data_to_process_Z = self.dataZ[:, self.vect_num]
 
-        self.data_to_process = self.data_to_process * self.window
+        # if self.type_to_process == 'X':
+            # self.data_to_process = self.dataX
+        # elif self.type_to_process == 'Z':
+            # self.data_to_process = self.dataZ
+        # else:
+            # return
 
-        if self.bpm == "all":
-            self.fftwT = np.fft.rfftfreq(self.data_len, 1.0/4)
-            self.fftwT = self.fftwT[0:int(len(self.fftwT)/4)]
-            self.fftw_to_process = np.abs(np.fft.rfft(self.data_to_process - np.mean(self.data_to_process))) / self.data_len
-            self.fftw_to_process = self.fftw_to_process[0:int(len(self.fftw_to_process)/4)]
+        self.data_to_process_X = self.window_adding(self.data_to_process_X)
+        self.data_to_process_Z = self.window_adding(self.data_to_process_Z)
 
-        else:
-            self.fftwT = np.fft.rfftfreq(self.data_len, 1.0)
-            self.fftw_to_process = np.abs(np.fft.rfft(self.data_to_process - np.mean(self.data_to_process))) / self.data_len
+        # if self.bpm == "all":
+            # self.fftwT = np.fft.rfftfreq(self.data_len, 1.0/4)
+            # self.fftwT = self.fftwT[0:int(len(self.fftwT)/4)]
+            # self.fftw_to_process = np.abs(np.fft.rfft(self.data_to_process - np.mean(self.data_to_process))) / self.data_len
+            # self.fftw_to_process = self.fftw_to_process[0:int(len(self.fftw_to_process)/4)]
+
+        # else:
+            # self.fftwT = np.fft.rfftfreq(self.data_len, 1.0)
+            # self.fftw_to_process = np.abs(np.fft.rfft(self.data_to_process - np.mean(self.data_to_process))) / self.data_len
+        self.fftwT = np.fft.rfftfreq(self.data_len, 1.0)
+        self.fftw_to_process_X = self.fftw_creating(self.data_to_process_X)
+        self.fftw_to_process_Z = self.fftw_creating(self.data_to_process_Z)
 
         if self.algType == 'None':
             self.frq_founded = 0.0
@@ -117,6 +127,17 @@ class DataProcessor(QObject):
             self.frq_founded = self.on_naff_method()
 
         self.data_processed.emit(self)
+
+    def window_adding(self, data):
+        """   """
+        data = data * self.window
+        return data
+
+    def fftw_creating(self, data):
+        """   """
+        fftw_data = None
+        fftw_data = np.abs(np.fft.rfft(data - np.mean(data))) / self.data_len
+        return fftw_data
 
     def on_peak_method(self):
         """   """

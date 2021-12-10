@@ -4,7 +4,7 @@ from PyQt5.QtCore import QCoreApplication, QSettings, QSize
 from PyQt5.QtGui import QIcon
 import signal
 from mainwindow import *
-from datadecompositor inport DataDecompositor
+from datadecompositor import DataDecompositor
 from dataprocessor import DataProcessor
 from settingscontrol import SettingsControl
 from command_parser import TerminalParser
@@ -54,20 +54,20 @@ if __name__ == "__main__":
     data_source = BPMDataAll()
 
     data_decompositor = DataDecompositor()
-    data_proc_1 = DataProcessor(1)
-    data_proc_2 = DataProcessor(2)
+    data_proc_1 = DataProcessor(v1_num_parsed)
+    data_proc_2 = DataProcessor(v2_num_parsed)
     settingsControl = SettingsControl()
 
-    mw = MainWindow(data_source, data_proc_1, data_proc_2, settingsControl, bpm_name_parsed)
-    mw.setWindowTitle('TDP ({})'.format(bpm_name_parsed))
+    mw = MainWindow(data_source, data_proc_1, data_proc_2, settingsControl)
+    mw.setWindowTitle('TDP ({})'.format('all'))
 
     icon_path = os.path.dirname(os.path.abspath(__file__))
     mw_icon = QIcon()
     mw_icon.addFile(os.path.join(icon_path, 'etc/icons/app_icon.png'), QSize(32, 32))
     mw.setWindowIcon(mw_icon)
 
-    #data_source.data_ready.connect(mw.on_data1_ready)
-    #data_source.data_ready.connect(mw.on_data3_ready)
+    data_source.data_ready.connect(mw.on_data1_ready)
+    data_source.data_ready.connect(mw.on_data3_ready)
     data_source.data_ready.connect(data_decompositor.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_1.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_2.on_data_recv)
@@ -82,11 +82,11 @@ if __name__ == "__main__":
     settingsControl.add_object(data_source)
     settingsControl.read_settings()
 
-    data_proc_X.data_processed.connect(mw.on_freq_status_X)
-    data_proc_Z.data_processed.connect(mw.on_freq_status_Z)
+    data_proc_1.data_processed.connect(mw.on_freq_status_X)
+    data_proc_2.data_processed.connect(mw.on_freq_status_Z)
 
-    mw.controlWidgetX.signature.connect(data_source.force_data_ready)
-    mw.controlWidgetZ.signature.connect(data_source.force_data_ready)
+    mw.controlWidget1.signature.connect(data_source.force_data_ready)
+    mw.controlWidget2.signature.connect(data_source.force_data_ready)
 
     mw.show()
     sys.exit(app.exec_())
