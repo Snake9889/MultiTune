@@ -29,18 +29,18 @@ if __name__ == "__main__":
     app.setStyle('Cleanlooks')
 
     argument_parser = TerminalParser()
-    #bpm_name_parsed = argument_parser.bpm_name_parsed
+    bpm_name_parsed = argument_parser.bpm_name_parsed
     v1_num_parsed = argument_parser.v1_parsed
     v2_num_parsed = argument_parser.v2_parsed
     data_source = None
 
-    # if bpm_name_parsed == "model":
-        # from datasources import BPMData
-        # data_source = BPMData()
+    if bpm_name_parsed == "model":
+        from datasources import BPMData
+        data_source = BPMData()
 
-    #elif bpm_name_parsed == "all":
-        #from datasources_all import BPMDataAll
-        #data_source = BPMDataAll()
+    elif bpm_name_parsed == "all":
+        from datasources_all import BPMDataAll
+        data_source = BPMDataAll()
 
     # else:
         # from datasources_bpm import BPMData
@@ -51,14 +51,14 @@ if __name__ == "__main__":
         # exit()
 
 
-    data_source = BPMDataAll()
+    #data_source = BPMDataAll()
 
     data_decompositor = DataDecompositor()
     data_proc_1 = DataProcessor(v1_num_parsed)
     data_proc_2 = DataProcessor(v2_num_parsed)
     settingsControl = SettingsControl()
 
-    mw = MainWindow(data_source, data_proc_1, data_proc_2, settingsControl)
+    mw = MainWindow(data_source, data_proc_1, data_proc_2, settingsControl, bpm_name_parsed)
     mw.setWindowTitle('TDP ({})'.format('all'))
 
     icon_path = os.path.dirname(os.path.abspath(__file__))
@@ -67,7 +67,9 @@ if __name__ == "__main__":
     mw.setWindowIcon(mw_icon)
 
     data_source.data_ready.connect(mw.on_data1_ready)
+    data_source.data_ready.connect(mw.on_data2_ready)
     data_source.data_ready.connect(mw.on_data3_ready)
+    data_source.data_ready.connect(mw.on_data4_ready)
     data_source.data_ready.connect(data_decompositor.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_1.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_2.on_data_recv)

@@ -30,7 +30,7 @@ class ControlWidget(QWidget):
         self.method = argument_parser.method_name_parsed
         self.v1 = argument_parser.v1_parsed
 
-        #self.bpm = argument_parser.bpm_name_parsed
+        self.bpm = argument_parser.bpm_name_parsed
         self.boards = None
         self.lboard = 0.01
         self.rboard = 0.5
@@ -157,7 +157,7 @@ class ControlWidget(QWidget):
         """   """
         settings = QSettings()
 
-        if self.str_id == "Data_X":
+        if self.str_id == "Data_1":
             settings.beginGroup(self.bpm)
             settings.beginGroup(self.str_id)
             self.window = settings.value("window", "None")
@@ -166,8 +166,9 @@ class ControlWidget(QWidget):
             self.rboard = settings.value("rboard", 0.25, type=float)
             self.scale = settings.value("scale", "Normal")
             settings.endGroup()
+            #settings.endGroup()
 
-        elif self.str_id == "Data_Z":
+        elif self.str_id == "Data_2":
             settings.beginGroup(self.bpm)
             settings.beginGroup(self.str_id)
             self.window = settings.value("window", "Hann")
@@ -176,6 +177,7 @@ class ControlWidget(QWidget):
             self.rboard = settings.value("rboard", 0.30, type=float)
             self.scale = settings.value("scale", "Normal")
             settings.endGroup()
+            #settings.endGroup()
 
         else:
             print("Have no SETTINGS!!!!!")

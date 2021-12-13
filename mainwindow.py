@@ -14,14 +14,14 @@ class MainWindow(QMainWindow):
     """   """
     region_changed = pyqtSignal(object)
 
-    def __init__(self, data_source, data_proc_1, data_proc_2, settings_control):
+    def __init__(self, data_source, data_proc_1, data_proc_2, settings_control, bpm_name):
         super(MainWindow, self).__init__()
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
         self.ui = uic.loadUi(os.path.join(ui_path, 'MainWindow_new.ui'), self)
 
         self.window_str = "None"
-        #self.bpm = bpm_name
+        self.bpm = bpm_name
 
         # if self.bpm == "all":
             # """ Replace one widget with another """
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
             # self.phasebtn = QPushButton('Phase', self)
             # self.phasebtn.setCheckable(True)
             # self.phasebtn.setStyleSheet("QPushButton:checked {color: black; background-color: green;}")
-            
+
             # self.phase_widget = PhaseWidget(os.path.join(ui_path))
             # self.phasebtn.clicked.connect(self.phase_widget.show)
 
@@ -57,8 +57,8 @@ class MainWindow(QMainWindow):
         self.data_proc_2 = data_proc_2
         self.settingsControl = settings_control
 
-        self.data_proc_1.data_processed.connect(self.on_data2_ready)
-        self.data_proc_2.data_processed.connect(self.on_data4_ready)
+        self.data_proc_1.data_processed.connect(self.on_data_sng_1_ready)
+        self.data_proc_2.data_processed.connect(self.on_data_sng_2_ready)
 
         self.controlWidget1.window_changed_str.connect(self.data_proc_1.on_wind_changed)
         self.controlWidget1.groupBox.setTitle("1 Controller")
@@ -96,10 +96,19 @@ class MainWindow(QMainWindow):
 
         self.plots_customization()
 
-        self.data_curve1 = self.ui.plot1.plot(pen='r', title='X_plot')
-        self.data_curve2 = self.ui.plot_sng1.plot(pen='r', title='Fourier Transform X_plot')
-        self.data_curve3 = self.ui.plot2.plot(pen='b', title='Z_plot')
-        self.data_curve4 = self.ui.plot_sng2.plot(pen='b', title='Fourier Transform Z_plot')
+        self.data_curve11 = self.ui.plot1.plot(pen='r', title='X_plot')
+        self.data_curve12 = self.ui.plot1.plot(pen='b', title='Z_plot')
+        self.data_curve21 = self.ui.plot2.plot(pen='r', title='X_plot')
+        self.data_curve22 = self.ui.plot2.plot(pen='b', title='Z_plot')
+        self.data_curve31 = self.ui.plot3.plot(pen='r', title='X_plot')
+        self.data_curve32 = self.ui.plot3.plot(pen='b', title='Z_plot')
+        self.data_curve41 = self.ui.plot4.plot(pen='r', title='X_plot')
+        self.data_curve42 = self.ui.plot4.plot(pen='b', title='Z_plot')
+
+        self.data_curve5 = self.ui.plot_sng1.plot(pen='r', title='Fourier Transform X_plot')
+        self.data_curve6 = self.ui.plot_sng1.plot(pen='b', title='Fourier Transform Z_plot')
+        self.data_curve7 = self.ui.plot_sng2.plot(pen='r', title='Fourier Transform X_plot')
+        self.data_curve8 = self.ui.plot_sng2.plot(pen='b', title='Fourier Transform Z_plot')
 
     @staticmethod
     def customise_label(plot, text_item, html_str):
@@ -110,20 +119,28 @@ class MainWindow(QMainWindow):
 
     def plots_customization(self):
         """   """
-        label_str_x = "<span style=\"color:red; font-size:16px\">{}</span>"
-        label_str_z = "<span style=\"color:blue;font-size:16px\">{}</span>"
+        label_str_1 = "<span style=\"color:red; font-size:16px\">{}</span>"
+        label_str_2 = "<span style=\"color:blue;font-size:16px\">{}</span>"
 
         plot = self.ui.plot1
         self.customize_plot(plot)
-        self.customise_label(plot, pg.TextItem(), label_str_x.format("X"))
+        self.customise_label(plot, pg.TextItem(), label_str_1.format("1"))
 
         plot = self.ui.plot2
         self.customize_plot(plot)
-        self.customise_label(plot, pg.TextItem(), label_str_z.format("Z"))
+        self.customise_label(plot, pg.TextItem(), label_str_1.format("2"))
+
+        plot = self.ui.plot3
+        self.customize_plot(plot)
+        self.customise_label(plot, pg.TextItem(), label_str_1.format("3"))
+
+        plot = self.ui.plot4
+        self.customize_plot(plot)
+        self.customise_label(plot, pg.TextItem(), label_str_1.format("4"))
 
         plot = self.ui.plot_sng1
         self.customize_plot(plot)
-        self.customise_label(plot, pg.TextItem(), label_str_x.format("Ax"))
+        self.customise_label(plot, pg.TextItem(), label_str_2.format("V1"))
 
         self.sng1 = pg.LinearRegionItem([self.controlWidget1.lboard, self.controlWidget2.rboard])
         self.sng1.setBounds([0,0.5])
@@ -132,7 +149,7 @@ class MainWindow(QMainWindow):
 
         plot = self.ui.plot_sng2
         self.customize_plot(plot)
-        self.customise_label(plot, pg.TextItem(), label_str_z.format("Az"))
+        self.customise_label(plot, pg.TextItem(), label_str_2.format("V2"))
 
         self.sng2 = pg.LinearRegionItem([self.controlWidget2.lboard, self.controlWidget2.rboard])
         self.sng2.setBounds([0,0.5])
@@ -213,28 +230,44 @@ class MainWindow(QMainWindow):
 
     def on_data1_ready(self, data_source):
         """   """
-        self.data_curve1.setData(data_source.dataT, data_source.dataX[:,0])
-        self.x_rect = self.ui.plot1.viewRange()
+        self.data_curve11.setData(data_source.dataT, data_source.dataX[:,0])
+        self.data_curve12.setData(data_source.dataT, data_source.dataZ[:,0])
+        self.r1_rect = self.ui.plot1.viewRange()
+
+    def on_data2_ready(self, data_source):
+        """   """
+        self.data_curve21.setData(data_source.dataT, data_source.dataX[:,1])
+        self.data_curve22.setData(data_source.dataT, data_source.dataZ[:,1])
+        self.r2_rect = self.ui.plot2.viewRange()
 
     def on_data3_ready(self, data_source):
         """   """
-        self.data_curve3.setData(data_source.dataT, data_source.dataX[:,1])
-        self.z_rect = self.ui.plot2.viewRange()
+        self.data_curve31.setData(data_source.dataT, data_source.dataX[:,2])
+        self.data_curve32.setData(data_source.dataT, data_source.dataZ[:,2])
+        self.r3_rect = self.ui.plot3.viewRange()
 
-    def on_data2_ready(self, data_processor):
+    def on_data4_ready(self, data_source):
         """   """
-        self.data_curve2.setData(data_processor.fftwT, data_processor.fftw_to_process)
+        self.data_curve41.setData(data_source.dataT, data_source.dataX[:,3])
+        self.data_curve42.setData(data_source.dataT, data_source.dataZ[:,3])
+        self.r4_rect = self.ui.plot4.viewRange()
+
+    def on_data_sng_1_ready(self, data_processor):
+        """   """
+        self.data_curve5.setData(data_processor.fftwT, data_processor.fftw_to_process_X)
+        self.data_curve6.setData(data_processor.fftwT, data_processor.fftw_to_process_Z)
         self.sng1_rect = self.ui.plot_sng1.viewRange()
 
-    def on_data4_ready(self, data_processor):
+    def on_data_sng_2_ready(self, data_processor):
         """   """
-        self.data_curve4.setData(data_processor.fftwT, data_processor.fftw_to_process)
+        self.data_curve7.setData(data_processor.fftwT, data_processor.fftw_to_process_X)
+        self.data_curve8.setData(data_processor.fftwT, data_processor.fftw_to_process_Z)
         self.sng2_rect = self.ui.plot_sng2.viewRange()
 
     def on_freq_status_X(self, data_processor):
         """   """
         if data_processor.warning == 0:
-            self.ui.frq_x.setText('{:.5f}'.format(data_processor.frq_founded))
+            self.ui.frq_x.setText('{:.5f}'.format(data_processor.frq_founded_X))
         elif data_processor.warning == 1:
             self.ui.frq_x.setText(data_processor.warningText)
         else:
@@ -243,7 +276,7 @@ class MainWindow(QMainWindow):
     def on_freq_status_Z(self, data_processor):
         """   """
         if data_processor.warning == 0:
-            self.ui.frq_z.setText('{:.5f}'.format(data_processor.frq_founded))
+            self.ui.frq_z.setText('{:.5f}'.format(data_processor.frq_founded_Z))
         elif data_processor.warning == 1:
             self.ui.frq_z.setText(data_processor.warningText)
         else:
@@ -252,10 +285,12 @@ class MainWindow(QMainWindow):
     def save_settings(self):
         """   """
         settings = QSettings()
-        #settings.beginGroup(self.bpm)
+        settings.beginGroup(self.bpm)
         settings.beginGroup("Plots")
-        settings.setValue("x_zoom", self.x_rect)
-        settings.setValue("z_zoom", self.z_rect)
+        settings.setValue("1_zoom", self.r1_rect)
+        settings.setValue("2_zoom", self.r2_rect)
+        settings.setValue("3_zoom", self.r3_rect)
+        settings.setValue("4_zoom", self.r4_rect)
         settings.setValue("sng1_zoom", self.sng1_rect)
         settings.setValue("sng2_zoom", self.sng2_rect)
         settings.setValue('size', self.size())
@@ -268,19 +303,23 @@ class MainWindow(QMainWindow):
         """   """
         rect_def = [[0, 1], [0, 1]]
         settings = QSettings()
-        #settings.beginGroup(self.bpm)
+        settings.beginGroup(self.bpm)
         settings.beginGroup("Plots")
-        self.x_rect = settings.value("x_zoom", rect_def)
+        self.r1_rect = settings.value("1_zoom", rect_def)
+        self.r2_rect = settings.value("2_zoom", rect_def)
+        self.r3_rect = settings.value("3_zoom", rect_def)
+        self.r4_rect = settings.value("4_zoom", rect_def)
         self.sng1_rect = settings.value("sng1_zoom", rect_def)
-        self.z_rect = settings.value("z_zoom", rect_def)
         self.sng2_rect = settings.value("sng2_zoom", rect_def)
         self.resize(settings.value('size', QSize(500, 500)))
         self.move(settings.value('pos', QPoint(60, 60)))
         settings.endGroup()
         settings.endGroup()
 
-        self.ui.plot1.setRange(xRange=self.x_rect[0], yRange=self.x_rect[1])
-        self.ui.plot2.setRange(xRange=self.z_rect[0], yRange=self.z_rect[1])
+        self.ui.plot1.setRange(xRange=self.r1_rect[0], yRange=self.r1_rect[1])
+        self.ui.plot2.setRange(xRange=self.r2_rect[0], yRange=self.r2_rect[1])
+        self.ui.plot3.setRange(xRange=self.r3_rect[0], yRange=self.r3_rect[1])
+        self.ui.plot4.setRange(xRange=self.r4_rect[0], yRange=self.r4_rect[1])
 
         self.ui.plot_sng1.setRange(xRange=self.sng1_rect[0], yRange=self.sng1_rect[1])
         self.ui.plot_sng2.setRange(xRange=self.sng2_rect[0], yRange=self.sng2_rect[1])

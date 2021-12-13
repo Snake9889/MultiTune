@@ -55,7 +55,7 @@ class DataDecompositor(QObject):
 
     def SVD(self, M1):
         """   """
-        U, sng, data_decomposed= None
+        U, sng, data_decomposed= None, None, None
         U, sng, data_decomposed = lg.svd(M1)
         return (data_decomposed)
 

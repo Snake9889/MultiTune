@@ -164,15 +164,13 @@ class BPMDataAll(BPMTemplate):
 
     def reshaping_arrays(self, M1, M2, M3, M4):
         """   """
+        newMass = np.zeros((M1.shape[0], 4))
         print(M1.shape)
-        newMass = np.hstack((M1,M2,M3,M4))
+        newMass[:,0] = M1
+        newMass[:,1] = M2
+        newMass[:,2] = M3
+        newMass[:,3] = M4
         print(newMass.shape)
-        # for i in range(len(M1)):
-            # newMass[4*i + 0] = M1[i]
-            # newMass[4*i + 1] = M2[i]
-            # newMass[4*i + 2] = M3[i]
-            # newMass[4*i + 3] = M4[i]
-
         return(newMass)
 
     def everyting_ok(self, label):
