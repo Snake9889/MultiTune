@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>227</width>
-    <height>304</height>
+    <height>340</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -46,6 +46,30 @@
           <item>
            <property name="text">
             <string>Hamming</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="checkSingularBox">
+          <item>
+           <property name="text">
+            <string>First_vector</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Second_vector</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Third_vector</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Fourth_vector</string>
            </property>
           </item>
          </widget>
@@ -90,30 +114,6 @@
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup</string>
           </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="checkSingularBox">
-          <item>
-           <property name="text">
-            <string>First_vector</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Second_vector</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Third_vector</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Fourth_vector</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>
