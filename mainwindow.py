@@ -72,9 +72,12 @@ class MainWindow(QMainWindow):
 
         self.controlWidget1.method_changed_str.connect(self.data_proc_1.on_method_changed)
         self.controlWidget1.boards_changed.connect(self.data_proc_1.on_boards_changed)
+        self.controlWidget1.vector_changed_int.connect(self.data_proc_1.on_vector_changed)
 
         self.controlWidget2.method_changed_str.connect(self.data_proc_2.on_method_changed)
         self.controlWidget2.boards_changed.connect(self.data_proc_2.on_boards_changed)
+        self.controlWidget2.vector_changed_int.connect(self.data_proc_2.on_vector_changed)
+
 
         #self.phase_widget = PhaseWidget(os.path.join(ui_path))
         #self.phasebtn.clicked.connect(self.phase_widget.show)

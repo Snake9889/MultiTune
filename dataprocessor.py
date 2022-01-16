@@ -60,6 +60,10 @@ class DataProcessor(QObject):
         """   """
         self.algType = algType
 
+    def on_vector_changed(self, vector_num):
+        """   """
+        self.vect_num = int(vector_num)
+
     def on_boards_changed(self, boards_dict):
         """   """
         self.boards = boards_dict
