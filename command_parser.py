@@ -10,7 +10,7 @@ class TerminalParser(QObject):
 
         self.parser = argparse.ArgumentParser(description='Startup settings for software')
 
-        self.parser.add_argument('-bn', action='store', default='all', dest='bpm_name',
+        self.parser.add_argument('-bn', action='store', default='model', dest='bpm_name',
                                   help='name of bpm, like all / model, '
                                          'where model - simulated signal, and all - data from all bpms.')
         self.parser.add_argument('-mt', action='store', default='peak', dest='method_name',
