@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1070</width>
-    <height>687</height>
+    <width>1432</width>
+    <height>702</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -422,6 +422,20 @@
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QComboBox" name="decompBox">
+        <item>
+         <property name="text">
+          <string>PCA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ICA</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="ControlWidget" name="controlWidget1" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -487,7 +501,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1070</width>
+     <width>1432</width>
      <height>22</height>
     </rect>
    </property>

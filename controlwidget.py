@@ -27,8 +27,9 @@ class ControlWidget(QWidget):
         argument_parser = TerminalParser()
 
         self.window = "None"
+        self.decomp_method = "PCA"
         self.method = argument_parser.method_name_parsed
-        self.v1 = argument_parser.v1_parsed
+        #self.v1 = argument_parser.v1_parsed
 
         self.bpm = argument_parser.bpm_name_parsed
         self.boards = None
@@ -55,10 +56,10 @@ class ControlWidget(QWidget):
         self.rboardSBox.setValue(0.3)
 
         self.checkWindowBox.currentIndexChanged.connect(self.on_window_checked)
-        self.checkSingularBox.currentIndexChanged.connect(self.on_vect_checked)
         self.buttonGroup.buttonClicked['int'].connect(self.on_method_checked)
         self.lboardSBox.valueChanged.connect(self.on_lboardsbox_changed)
         self.rboardSBox.valueChanged.connect(self.on_rboardsbox_changed)
+        self.singularSBox.valueChanged.connect(self.on_sing_vect_changed)
         self.log_mod.stateChanged.connect(self.on_plot_checked)
 
     def on_window_checked(self, state):
@@ -74,9 +75,10 @@ class ControlWidget(QWidget):
 
         self.window_changed_str.emit(self.window)
 
-    def on_vect_checked(self, state):
+    def on_sing_vect_changed(self, value):
         """   """
-        self.vector_changed_int.emit(state)
+        print(value)
+        self.vector_changed_int.emit(value)
 
     def on_method_checked(self, state):
         """   """

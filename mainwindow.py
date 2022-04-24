@@ -12,6 +12,7 @@ from statuswidget import StatusWidget
 
 class MainWindow(QMainWindow):
     """   """
+    decomp_changed_str = pyqtSignal(str)
     region_changed = pyqtSignal(object)
 
     def __init__(self, data_source, data_proc_1, data_proc_2, settings_control, bpm_name):
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow):
         self.controlWidget2.boards_changed.connect(self.data_proc_2.on_boards_changed)
         self.controlWidget2.vector_changed_int.connect(self.data_proc_2.on_vector_changed)
 
+        self.decompBox.currentIndexChanged.connect(self.on_decomp_changed)
 
         #self.phase_widget = PhaseWidget(os.path.join(ui_path))
         #self.phasebtn.clicked.connect(self.phase_widget.show)
@@ -219,6 +221,16 @@ class MainWindow(QMainWindow):
         """   """
         self.controlWidget2.on_boards_changed_ext(self.sng2.getRegion())
 
+    def on_decomp_changed(self, state):
+        if state == 0:
+            self.decomp_method = "PCA"
+        elif state == 1:
+            self.decomp_method = "ICA"
+        else:
+            self.decomp_method = "PCA"
+
+        self.decomp_changed_str.emit(self.decomp_method)
+
     def on_exit_button(self):
         """   """
         print(self, ' Exiting... Bye...')
@@ -263,8 +275,8 @@ class MainWindow(QMainWindow):
 
     def on_data_sng_2_ready(self, data_processor):
         """   """
-        self.data_curve7.setData(data_processor.fftwT, data_processor.fftw_to_process_X)
-        self.data_curve8.setData(data_processor.fftwT, data_processor.fftw_to_process_Z)
+        self.data_curve7.setData(self.data_proc_2.fftwT, self.data_proc_2.fftw_to_process_X)
+        self.data_curve8.setData(self.data_proc_2.fftwT, self.data_proc_2.fftw_to_process_Z)
         self.sng2_rect = self.ui.plot_sng2.viewRange()
 
     def on_freq_status_X(self, data_processor):

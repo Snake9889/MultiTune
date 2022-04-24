@@ -14,7 +14,7 @@ class BPMData(BPMTemplate):
         self.statusWidget = StatusWidget()
 
         self.data_len = 1024
-        
+
         self.mu, self.sigma = 0, 1
         self.a0 = 1
         self.a1 = 0.8
@@ -23,7 +23,7 @@ class BPMData(BPMTemplate):
         self.w1 = 0.176
         self.w2 = 0.02
         self.k = 0.0000005
-        
+
         # self.phase1 = 0.00101
         # self.phase2 = 0.00425
         # self.phase3 = 0.0085
@@ -38,7 +38,7 @@ class BPMData(BPMTemplate):
 
         self.dataT = np.arange(0, self.data_len, dtype=float)
 
-        self.def_time = 1000
+        self.def_time = 10**4
         self.timer = QTimer()
         self.timer.timeout.connect(self.on_timer_update)
         self.timer.start(self.def_time)
@@ -88,7 +88,7 @@ class BPMData(BPMTemplate):
                 [x for x in bnamp*(np.random.normal(self.mu, self.sigma, self.data_len))]
 
         dataI = np.ones(self.data_len)
-        
+
         #dataX = dataX + 0.3 * np.random.normal(size=self.data_len)  # 30% noise
         #dataZ = dataZ + 0.4 * np.random.normal(size=self.data_len)  # 10% noise
         return(dataX, dataZ, dataI)
@@ -96,7 +96,7 @@ class BPMData(BPMTemplate):
     def harmonic_oscillations(self, phase, dataT, amp1, freq, amp2):
         """   """
         osc = (amp1 + amp2*(np.random.normal(self.mu, self.sigma, self.data_len)))*np.sin(2 * np.pi * freq * dataT + 2 * np.pi * phase)
-        
+
         return(osc)
 
     def force_data_ready(self, signature):

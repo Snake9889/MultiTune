@@ -81,21 +81,22 @@ class DataProcessor(QObject):
         if windowType == 'Hamming':
             self.window = np.hamming(self.data_len)
 
-    def on_data_recv(self, data_source):
+    def on_data_recv(self, data_decompositor):
         """   """
-        self.data_len = data_source.data_len
+        self.data_len = data_decompositor.data_len
 
         self.regen_wind(self.windowType)
 
-        self.dataT = data_source.dataT
-        self.dataX = data_source.dataX
-        self.dataZ = data_source.dataZ
-        self.dataI = data_source.dataI
+        self.dataT = data_decompositor.dataT
+        self.dataX = data_decompositor.data_decomposed_X
+        self.dataZ = data_decompositor.data_decomposed_Z
+        self.dataI = data_decompositor.dataI
 
 
         print(self.vect_num)
         print(self.dataX.shape)
         self.data_to_process_X = self.dataX[ :, self.vect_num - 1]
+        print(self.data_to_process_X.shape)
         self.data_to_process_Z = self.dataZ[ :, self.vect_num - 1]
 
         # if self.type_to_process == 'X':
