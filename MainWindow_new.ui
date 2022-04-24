@@ -422,20 +422,6 @@
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QComboBox" name="decompBox">
-        <item>
-         <property name="text">
-          <string>PCA</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>ICA</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
        <widget class="ControlWidget" name="controlWidget1" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -470,6 +456,27 @@
         </property>
         <property name="styleSheet">
          <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="decompBox">
+        <item>
+         <property name="text">
+          <string>PCA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ICA</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="filterBox">
+        <property name="text">
+         <string>Filtration</string>
         </property>
        </widget>
       </item>

@@ -88,6 +88,7 @@ if __name__ == "__main__":
     data_proc_2.data_processed.connect(mw.on_freq_status_Z)
 
     mw.decomp_changed_str.connect(data_decompositor.method_changed)
+    mw.filter_changed_str.connect(data_decompositor.filter_state_changed)
     mw.controlWidget1.signature.connect(data_source.force_data_ready)
     mw.controlWidget2.signature.connect(data_source.force_data_ready)
 

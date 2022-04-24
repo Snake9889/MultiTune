@@ -50,7 +50,10 @@
         <item>
          <widget class="QLabel" name="sing_label">
           <property name="text">
-           <string>Vector_number</string>
+           <string>Vector</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>

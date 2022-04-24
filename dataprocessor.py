@@ -202,7 +202,7 @@ class DataProcessor(QObject):
         left_ind = math.floor(self.data_len * self.left_bound)
         right_ind = math.ceil(self.data_len * self.right_bound)
 
-        tmp_x = self.data_fftw[left_ind: right_ind]
+        tmp_x = data_fftw[left_ind: right_ind]
         tmp_t = self.fftwT[left_ind: right_ind]
 
         if len(tmp_t) <= 1:
@@ -252,8 +252,8 @@ class DataProcessor(QObject):
                 conv_exp = np.exp(2 * np.pi * complex(0, 1) * self.dataT * omega)
                 falpha[it] = np.abs(np.sum(conv_exp * self.data_to_process))
             else:
-                conv_cos = np.sum(np.cos(2 * np.pi * self.dataT * omega) * self.data)
-                conv_sin = np.sum(np.sin(2 * np.pi * self.dataT * omega) * self.data)
+                conv_cos = np.sum(np.cos(2 * np.pi * self.dataT * omega) * data)
+                conv_sin = np.sum(np.sin(2 * np.pi * self.dataT * omega) * data)
                 falpha[it] = np.sqrt(conv_cos * conv_cos + conv_sin * conv_sin)
 
         self.alpha = alpha.copy()

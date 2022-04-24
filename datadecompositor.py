@@ -18,6 +18,7 @@ class DataDecompositor(QObject):
         self.data_len = data_len
 
         self.method = "PCA"
+        self.filter_state = "None"
 
         self.dataT = None
         self.dataX = None
@@ -96,6 +97,12 @@ class DataDecompositor(QObject):
 
     def method_changed(self, method):
         self.method = method
+
+    def filter_state_changed(self, state):
+        """   """
+        self.filter_state = state
+
+
 
 
 

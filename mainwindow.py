@@ -13,6 +13,7 @@ from statuswidget import StatusWidget
 class MainWindow(QMainWindow):
     """   """
     decomp_changed_str = pyqtSignal(str)
+    filter_changed_str = pyqtSignal(str)
     region_changed = pyqtSignal(object)
 
     def __init__(self, data_source, data_proc_1, data_proc_2, settings_control, bpm_name):
@@ -22,6 +23,7 @@ class MainWindow(QMainWindow):
         self.ui = uic.loadUi(os.path.join(ui_path, 'MainWindow_new.ui'), self)
 
         self.window_str = "None"
+        self.filter_state = "None"
         self.bpm = bpm_name
 
         # if self.bpm == "all":
@@ -80,6 +82,7 @@ class MainWindow(QMainWindow):
         self.controlWidget2.vector_changed_int.connect(self.data_proc_2.on_vector_changed)
 
         self.decompBox.currentIndexChanged.connect(self.on_decomp_changed)
+        self.filterBox.stateChanged.connect(self.on_filter_checked)
 
         #self.phase_widget = PhaseWidget(os.path.join(ui_path))
         #self.phasebtn.clicked.connect(self.phase_widget.show)
@@ -230,6 +233,14 @@ class MainWindow(QMainWindow):
             self.decomp_method = "PCA"
 
         self.decomp_changed_str.emit(self.decomp_method)
+
+    def on_filter_checked(self, state):
+        """   """
+        if state == Qt.Checked:
+            self.filter_state = "Kalman"
+        else:
+            self.filter_state = "None"
+        self.scale_changed_obj.emit(self.filter_state)
 
     def on_exit_button(self):
         """   """
