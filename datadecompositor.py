@@ -45,6 +45,8 @@ class DataDecompositor(QObject):
         self.dataZ = data_source.dataZ
         self.dataI = data_source.dataI
 
+
+
         self.dataX = self.vect_multiplication(data_source.dataX)
         self.dataZ = self.vect_multiplication(data_source.dataZ)
         self.dataI = self.vect_multiplication(data_source.dataI)
