@@ -2,7 +2,6 @@
 #
 from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSettings
 import numpy as np
-import pycx4.qcda as cda
 from BPM_template import BPMTemplate
 from datasources_bpm import BPMData
 from statuswidget import StatusWidget
