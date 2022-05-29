@@ -293,20 +293,20 @@ class MainWindow(QMainWindow):
     def on_freq_status_X(self, data_processor):
         """   """
         if data_processor.warning == 0:
-            self.ui.frq_x.setText('{:.5f}'.format(data_processor.frq_founded_X))
+            self.ui.frq_x1.setText('{:.5f}'.format(data_processor.frq_founded_X))
         elif data_processor.warning == 1:
-            self.ui.frq_x.setText(data_processor.warningText)
+            self.ui.frq_x1.setText(data_processor.warningText)
         else:
-            self.ui.frq_x.setText('Unexpected value!')
+            self.ui.frq_x1.setText('Unexpected value!')
 
     def on_freq_status_Z(self, data_processor):
         """   """
         if data_processor.warning == 0:
-            self.ui.frq_z.setText('{:.5f}'.format(data_processor.frq_founded_Z))
+            self.ui.frq_z1.setText('{:.5f}'.format(data_processor.frq_founded_Z))
         elif data_processor.warning == 1:
-            self.ui.frq_z.setText(data_processor.warningText)
+            self.ui.frq_z1.setText(data_processor.warningText)
         else:
-            self.ui.frq_z.setText('Unexpected value!')
+            self.ui.frq_z1.setText('Unexpected value!')
 
     def save_settings(self):
         """   """
