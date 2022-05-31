@@ -36,6 +36,50 @@ class DataDecompositor(QObject):
         self.warning = 0
         self.warningText = ""
 
+        # Q - предполагаемая ошибка в центре этого раунда
+        self.Q = 0.5
+        # R - погрешность измерения следующего раунда
+        self.R = 0.5
+        # Accumulated_Error - это оценочная ошибка предыдущего раунда, которая представляется как накопление всех ошибок.
+        self.Accumulated_Error = 1
+        # Начальное старое значение
+        self.kalman_adc_old = 0
+
+        self.SCOPE = 50
+
+    def kalman(ADC_Value):
+        """   """
+        # Отслеживать, когда новое значение слишком отличается от старого значения
+        if (abs(ADC_Value-kalman_adc_old)/SCOPE > 0.25):
+            Old_Input = ADC_Value*0.382 + self.kalman_adc_old*0.618
+        else:
+            Old_Input = self.kalman_adc_old
+
+        # Общая ошибка предыдущего раунда = накопленная ошибка ^ 2 + оценочная ошибка ^ 2
+        Old_Error_All = (self.Accumulated_Error**2 + self.Q**2)**(1/2)
+
+        # R - расчетная ошибка этого раунда
+        # H - доверие обеих сторон, рассчитанное с использованием среднеквадратичной ошибки
+        H = Old_Error_All**2/(Old_Error_All**2 + self.R**2)
+
+        # Старое значение + 1.00001 / (1.00001 + 0.1) * (новое значение - старое значение)
+        kalman_adc = Old_Input + H * (ADC_Value - Old_Input)
+
+        # Рассчитать новую накопленную ошибку
+        self.Accumulated_Error = ((1 - H)*Old_Error_All**2)**(1/2)
+        # Новое значение становится старым значением
+        kalman_adc_old = kalman_adc
+        
+        return (kalman_adc)
+
+    def filtration(sig):
+        """   """
+        adc=[]
+        for i in range(len(sig)):
+            adc.append(kalman(sig[i]))
+
+        return (adc)
+
     def on_data_recv(self, data_source):
         """   """
         self.data_len = data_source.data_len

@@ -84,8 +84,8 @@ if __name__ == "__main__":
     settingsControl.add_object(data_source)
     settingsControl.read_settings()
 
-    data_proc_1.data_processed.connect(mw.on_freq_status_X)
-    data_proc_2.data_processed.connect(mw.on_freq_status_Z)
+    data_proc_1.data_processed.connect(mw.on_freq_status_1)
+    data_proc_2.data_processed.connect(mw.on_freq_status_2)
 
     mw.decomp_changed_str.connect(data_decompositor.method_changed)
     mw.filter_changed_str.connect(data_decompositor.filter_state_changed)

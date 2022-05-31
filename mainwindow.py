@@ -99,8 +99,8 @@ class MainWindow(QMainWindow):
         self.controlWidget1.boards_changed.connect(self.boards_X_changed)
         self.controlWidget2.boards_changed.connect(self.boards_Z_changed)
 
-        self.ui.nu_x_label.setText('\u03BD<sub>x</sub> = ')
-        self.ui.nu_z_label.setText('\u03BD<sub>z</sub> = ')
+        self.ui.nu_x_label.setText('\u03BD<sub>1</sub> = ')
+        self.ui.nu_z_label.setText('\u03BD<sub>2</sub> = ')
 
         self.plots_customization()
 
@@ -290,23 +290,29 @@ class MainWindow(QMainWindow):
         self.data_curve8.setData(self.data_proc_2.fftwT, self.data_proc_2.fftw_to_process_Z)
         self.sng2_rect = self.ui.plot_sng2.viewRange()
 
-    def on_freq_status_X(self, data_processor):
+    def on_freq_status_1(self, data_processor):
         """   """
         if data_processor.warning == 0:
             self.ui.frq_x1.setText('{:.5f}'.format(data_processor.frq_founded_X))
-        elif data_processor.warning == 1:
-            self.ui.frq_x1.setText(data_processor.warningText)
-        else:
-            self.ui.frq_x1.setText('Unexpected value!')
-
-    def on_freq_status_Z(self, data_processor):
-        """   """
-        if data_processor.warning == 0:
             self.ui.frq_z1.setText('{:.5f}'.format(data_processor.frq_founded_Z))
         elif data_processor.warning == 1:
+            self.ui.frq_x1.setText(data_processor.warningText)
             self.ui.frq_z1.setText(data_processor.warningText)
         else:
+            self.ui.frq_x1.setText('Unexpected value!')
             self.ui.frq_z1.setText('Unexpected value!')
+
+    def on_freq_status_2(self, data_processor):
+        """   """
+        if data_processor.warning == 0:
+            self.ui.frq_x2.setText('{:.5f}'.format(data_processor.frq_founded_X))
+            self.ui.frq_z2.setText('{:.5f}'.format(data_processor.frq_founded_Z))
+        elif data_processor.warning == 1:
+            self.ui.frq_x2.setText(data_processor.warningText)
+            self.ui.frq_z2.setText(data_processor.warningText)
+        else:
+            self.ui.frq_x2.setText('Unexpected value!')
+            self.ui.frq_z2.setText('Unexpected value!')
 
     def save_settings(self):
         """   """
