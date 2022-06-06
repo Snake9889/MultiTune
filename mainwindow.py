@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
     decomp_changed_str = pyqtSignal(str)
     filter_changed_str = pyqtSignal(str)
     region_changed = pyqtSignal(object)
+    filter_changed_str = pyqtSignal(str)
 
     def __init__(self, data_source, data_proc_1, data_proc_2, settings_control, bpm_name):
         super(MainWindow, self).__init__()
@@ -193,10 +194,10 @@ class MainWindow(QMainWindow):
     def on_scale_changing(self, control_widget):
         """   """
         scale = control_widget.scale
-        if control_widget.str_id == "Data_X":
-            self.plot_mode(self.ui.sng1, scale)
-        elif control_widget.str_id == "Data_Z":
-            self.plot_mode(self.ui.sng2, scale)
+        if control_widget.str_id == "Data_1":
+            self.plot_mode(self.ui.plot_sng1, scale)
+        elif control_widget.str_id == "Data_2":
+            self.plot_mode(self.ui.plot_sng2, scale)
         else:
             print("Error in control_widget!")
 
@@ -240,7 +241,7 @@ class MainWindow(QMainWindow):
             self.filter_state = "Kalman"
         else:
             self.filter_state = "None"
-        self.scale_changed_obj.emit(self.filter_state)
+        self.filter_changed_str.emit(self.filter_state)
 
     def on_exit_button(self):
         """   """
