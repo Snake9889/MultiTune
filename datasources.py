@@ -1,5 +1,5 @@
 
-from PyQt5.QtCore import pyqtSignal, QObject, QTimer
+from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSettings
 import numpy as np
 from BPM_template import BPMTemplate
 from statuswidget import StatusWidget
@@ -38,10 +38,12 @@ class BPMData(BPMTemplate):
 
         self.dataT = np.arange(0, self.data_len, dtype=float)
 
-        self.def_time = 10**4
+        self.def_time = 8*10**3
         self.timer = QTimer()
         self.timer.timeout.connect(self.on_timer_update)
         self.timer.start(self.def_time)
+        self.particles = "e+"
+        self.bpm = bpm_name
 
 
     def on_timer_update(self):
@@ -102,3 +104,21 @@ class BPMData(BPMTemplate):
     def force_data_ready(self, signature):
         """   """
         super().force_data_ready(signature)
+
+    def read_settings(self):
+        """   """
+        settings = QSettings()
+        settings.beginGroup(self.bpm)
+        self.particles = settings.value("particles", "e-")
+        settings.endGroup()
+
+        #self.statusWidget.particles_type.setCurrentText(self.particles)
+
+    def save_settings(self):
+        """   """
+        settings = QSettings()
+        settings.beginGroup(self.bpm)
+        settings.setValue("particles", self.particles)
+        settings.endGroup()
+        print("Saved!!!!!")
+        settings.sync()

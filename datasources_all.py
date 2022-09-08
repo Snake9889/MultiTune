@@ -25,6 +25,7 @@ class BPMDataAll(BPMTemplate):
         self.l = [0, 0, 0, 0]
         self.istart = [1, 1, 1, 1]
         self.particles = "e+"
+        
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.on_timer_update)
@@ -36,6 +37,7 @@ class BPMDataAll(BPMTemplate):
         self.no_data(self.statusWidget.status_3)
         self.no_data(self.statusWidget.status_4)
 
+        self.bpm = bpm
         self.BPM1 = BPMData("bpm01")
         self.BPM2 = BPMData("bpm02")
         self.BPM3 = BPMData("bpm03")

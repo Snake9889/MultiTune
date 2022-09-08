@@ -77,15 +77,14 @@ if __name__ == "__main__":
     # data_source.data_ready.connect(data_proc_X.on_data_recv)
     # data_source.data_ready.connect(data_proc_Z.on_data_recv)
 
+    data_proc_1.data_processed.connect(mw.on_freq_status_1)
+    data_proc_2.data_processed.connect(mw.on_freq_status_2)
 
     settingsControl.add_object(mw)
     settingsControl.add_object(mw.controlWidget1)
     settingsControl.add_object(mw.controlWidget2)
     settingsControl.add_object(data_source)
     settingsControl.read_settings()
-
-    data_proc_1.data_processed.connect(mw.on_freq_status_1)
-    data_proc_2.data_processed.connect(mw.on_freq_status_2)
 
     mw.decomp_changed_str.connect(data_decompositor.method_changed)
     mw.filter_changed_str.connect(data_decompositor.filter_state_changed)

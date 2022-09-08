@@ -123,6 +123,7 @@ class DataDecompositor(QObject):
             self.data_decomposed_X = self.SVD(self.dataX)
             self.data_decomposed_Z = self.SVD(self.dataZ)
         elif self.method == "ICA":
+            np.random.seed(0)
             self.data_decomposed_X = self.ICA(self.dataX)
             self.data_decomposed_Z = self.ICA(self.dataZ)
 

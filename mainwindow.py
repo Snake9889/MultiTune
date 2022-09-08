@@ -51,10 +51,12 @@ class MainWindow(QMainWindow):
             # old_Widget.deleteLater()
 
         self.images_list = []
-        self.x_rect = None
-        self.fx_rect = None
-        self.z_rect = None
-        self.fz_rect = None
+        self.r1_rect = None
+        self.r2_rect = None
+        self.r3_rect = None
+        self.r4_rect = None
+        self.sng1_rect = None
+        self.sng2_rect = None
 
         self.data_source = data_source
         self.data_proc_1 = data_proc_1
@@ -325,7 +327,9 @@ class MainWindow(QMainWindow):
         settings.setValue("3_zoom", self.r3_rect)
         settings.setValue("4_zoom", self.r4_rect)
         settings.setValue("sng1_zoom", self.sng1_rect)
+        print(self.sng1_rect)
         settings.setValue("sng2_zoom", self.sng2_rect)
+        print(self.sng2_rect)
         settings.setValue('size', self.size())
         settings.setValue('pos', self.pos())
         settings.endGroup()
@@ -334,7 +338,7 @@ class MainWindow(QMainWindow):
 
     def read_settings(self):
         """   """
-        rect_def = [[0, 1], [0, 1]]
+        rect_def = [[0, 0.5], [0, 0.1]]
         settings = QSettings()
         settings.beginGroup(self.bpm)
         settings.beginGroup("Plots")
@@ -355,10 +359,8 @@ class MainWindow(QMainWindow):
         self.ui.plot4.setRange(xRange=self.r4_rect[0], yRange=self.r4_rect[1])
 
         self.ui.plot_sng1.setRange(xRange=self.sng1_rect[0], yRange=self.sng1_rect[1])
+        print(self.sng1_rect)
         self.ui.plot_sng2.setRange(xRange=self.sng2_rect[0], yRange=self.sng2_rect[1])
+        print(self.sng2_rect)
+        
 
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     window = MainWindow()
-#     window.show()
-#     sys.exit(app.exec_())
