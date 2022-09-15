@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1151</width>
-    <height>779</height>
+    <height>754</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,8 +29,8 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -475,7 +475,7 @@
       </item>
      </layout>
     </item>
-    <item>
+    <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="ControlWidget" name="controlWidget1" native="true">

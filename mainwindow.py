@@ -153,10 +153,10 @@ class MainWindow(QMainWindow):
         self.customize_plot(plot)
         self.customise_label(plot, pg.TextItem(), label_str_2.format("V1"))
 
-        self.sng1 = pg.LinearRegionItem([self.controlWidget1.lboard, self.controlWidget2.rboard])
+        self.sng1 = pg.LinearRegionItem([self.controlWidget1.lboard, self.controlWidget1.rboard])
         self.sng1.setBounds([0,0.5])
         plot.addItem(self.sng1)
-        self.sng1.sigRegionChangeFinished.connect(self.region_X_changed)
+        self.sng1.sigRegionChangeFinished.connect(self.region_1_changed)
 
         plot = self.ui.plot_sng2
         self.customize_plot(plot)
@@ -165,7 +165,7 @@ class MainWindow(QMainWindow):
         self.sng2 = pg.LinearRegionItem([self.controlWidget2.lboard, self.controlWidget2.rboard])
         self.sng2.setBounds([0,0.5])
         plot.addItem(self.sng2)
-        self.sng2.sigRegionChangeFinished.connect(self.region_Z_changed)
+        self.sng2.sigRegionChangeFinished.connect(self.region_2_changed)
 
         """ Here can be the cross-marker on plots """
         # vLine = pg.InfiniteLine(angle=90, movable=False)
@@ -211,19 +211,19 @@ class MainWindow(QMainWindow):
         if scale == 'Log_Y':
             plot.setLogMode(False, True)
 
-    def boards_X_changed(self, dict):
+    def boards_1_changed(self, dict):
         """   """
         self.sng1.setRegion([dict.get("lboard", 0.1), dict.get("rboard", 0.5)])
 
-    def boards_Z_changed(self, dict):
+    def boards_2_changed(self, dict):
         """   """
         self.sng2.setRegion([dict.get("lboard", 0.1), dict.get("rboard", 0.5)])
 
-    def region_X_changed(self):
+    def region_1_changed(self):
         """   """
         self.controlWidget1.on_boards_changed_ext(self.sng1.getRegion())
 
-    def region_Z_changed(self):
+    def region_2_changed(self):
         """   """
         self.controlWidget2.on_boards_changed_ext(self.sng2.getRegion())
 
