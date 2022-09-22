@@ -226,19 +226,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>X plot</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="lineWidth">
-         <number>1</number>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustIgnored</enum>
+         <string>First signal</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -266,7 +254,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Z spectrum</string>
+         <string>Second signal</string>
         </property>
        </widget>
       </item>

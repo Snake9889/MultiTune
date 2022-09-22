@@ -99,8 +99,8 @@ class MainWindow(QMainWindow):
         self.help_widget = HelpWidget(os.path.join(ui_path, 'etc/icons/Help_1.png'))
         self.actionHelp.triggered.connect(self.help_widget.show)
 
-        self.controlWidget1.boards_changed.connect(self.boards_X_changed)
-        self.controlWidget2.boards_changed.connect(self.boards_Z_changed)
+        self.controlWidget1.boards_changed.connect(self.boards_1_changed)
+        self.controlWidget2.boards_changed.connect(self.boards_2_changed)
 
         self.ui.nu_x_label.setText('\u03BD<sub>1</sub> = ')
         self.ui.nu_z_label.setText('\u03BD<sub>2</sub> = ')
