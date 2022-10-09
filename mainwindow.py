@@ -142,6 +142,7 @@ class MainWindow(QMainWindow):
         self.customise_label(plot, pg.TextItem(), label_str_1.format("2"))
 
         plot = self.ui.plot3
+        plot = self.ui.plot3
         self.customize_plot(plot)
         self.customise_label(plot, pg.TextItem(), label_str_1.format("3"))
 
