@@ -320,6 +320,12 @@ class MainWindow(QMainWindow):
 
     def save_settings(self):
         """   """
+        self.r1_rect = self.ui.plot1.viewRange()
+        self.r2_rect = self.ui.plot2.viewRange()
+        self.r3_rect = self.ui.plot3.viewRange()
+        self.r4_rect = self.ui.plot4.viewRange()
+        self.sng1_rect = self.ui.plot_sng1.viewRange()
+        self.sng2_rect = self.ui.plot_sng2.viewRange()
         settings = QSettings()
         settings.beginGroup(self.bpm)
         settings.beginGroup("Plots")
