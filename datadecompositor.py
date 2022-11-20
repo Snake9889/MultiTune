@@ -37,9 +37,9 @@ class DataDecompositor(QObject):
         self.warningText = ""
 
         # Q - предполагаемая ошибка в центре этого раунда
-        self.Q = 0.5
+        self.Q = 0.3
         # R - погрешность измерения следующего раунда
-        self.R = 0.5
+        self.R = 0.3
         # Accumulated_Error - это оценочная ошибка предыдущего раунда = накопление всех ошибок
         self.Accumulated_Error = 1
         # Начальное старое значение
@@ -74,19 +74,21 @@ class DataDecompositor(QObject):
 
     def filtration(self, sig):
         """   """
-        adc=[]
+        adc=np.empty([sig.shape[0], 1])
         for i in range(len(sig)):
-            adc.append(self.kalman(sig[i]))
+            np.append(adc, self.kalman(sig[i]))
+        print(adc.shape)
 
         return (adc)
 
     def filter(self, sig):
         """   """
         filtered_sig = np.empty([sig.shape[0], sig.shape[1]])
+        print(filtered_sig.shape)
         for i in range (sig.shape[1]):
-            print("hahaha")
             adc_sig = self.filtration(np.take(sig,i,axis=1))
             filtered_sig = np.append(filtered_sig, adc_sig, axis=1)
+        print(filtered_sig.shape)
         return (filtered_sig)
 
 
@@ -108,6 +110,7 @@ class DataDecompositor(QObject):
         else:
             pass
 
+        print(self.dataX, self.dataX.shape)
         self.dataX = self.vect_multiplication(data_source.dataX)
         self.dataZ = self.vect_multiplication(data_source.dataZ)
         self.dataI = self.vect_multiplication(data_source.dataI)
