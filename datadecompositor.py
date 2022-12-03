@@ -27,9 +27,6 @@ class DataDecompositor(QObject):
 
         self.fftwT = None
 
-        # self.data_to_process = None
-        # self.sng = None
-        # self.U = None
         self.data_decomposed_X = None
         self.data_decomposed_Z = None
 
@@ -77,18 +74,20 @@ class DataDecompositor(QObject):
         adc=np.empty([sig.shape[0], 1])
         for i in range(len(sig)):
             np.append(adc, self.kalman(sig[i]))
-        print(adc.shape)
 
         return (adc)
 
     def filter(self, sig):
         """   """
         filtered_sig = np.empty([sig.shape[0], sig.shape[1]])
-        print(filtered_sig.shape)
         for i in range (sig.shape[1]):
+            print(i)
             adc_sig = self.filtration(np.take(sig,i,axis=1))
-            filtered_sig = np.append(filtered_sig, adc_sig, axis=1)
-        print(filtered_sig.shape)
+            #filtered_sig = np.append(filtered_sig, adc_sig, axis=1)
+            filtered_sig[:, [i]] = adc_sig
+            print(sig-filtered_sig)
+        
+        print(sig.shape, filtered_sig.shape)
         return (filtered_sig)
 
 
@@ -100,6 +99,7 @@ class DataDecompositor(QObject):
         self.dataX = data_source.dataX
         self.dataZ = data_source.dataZ
         self.dataI = data_source.dataI
+        print(self.dataX)
 
         if self.filter_state == "None":
             pass
@@ -110,7 +110,6 @@ class DataDecompositor(QObject):
         else:
             pass
 
-        print(self.dataX, self.dataX.shape)
         self.dataX = self.vect_multiplication(data_source.dataX)
         self.dataZ = self.vect_multiplication(data_source.dataZ)
         self.dataI = self.vect_multiplication(data_source.dataI)
@@ -125,6 +124,7 @@ class DataDecompositor(QObject):
         if self.method == "PCA":
             self.data_decomposed_X = self.SVD(self.dataX)
             self.data_decomposed_Z = self.SVD(self.dataZ)
+            
         elif self.method == "ICA":
             np.random.seed(0)
             self.data_decomposed_X = self.ICA(self.dataX)
@@ -150,14 +150,14 @@ class DataDecompositor(QObject):
     def SVD(self, M1):
         """   """
         U, sng, data_decomposed = None, None, None
-        U, sng, data_decomposed = lg.svd(M1.T)
+        U, sng, data_decomposed = lg.svd(M1.T, full_matrices=False)
 
-        return (data_decomposed)
+        return (data_decomposed.T)
 
     def ICA(self, M1):
         """   """
         data_decomposed = None
-        ica = FastICA(n_components=16)
+        ica = FastICA(n_components=16, max_iter=5000, tol=0.1)
         data_decomposed = ica.fit_transform(M1)
 
         return(data_decomposed)

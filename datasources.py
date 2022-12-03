@@ -38,7 +38,7 @@ class BPMData(BPMTemplate):
 
         self.dataT = np.arange(0, self.data_len, dtype=float)
 
-        self.def_time = 8*10**3
+        self.def_time = 5*10**3
         self.timer = QTimer()
         self.timer.timeout.connect(self.on_timer_update)
         self.timer.start(self.def_time)
@@ -65,13 +65,11 @@ class BPMData(BPMTemplate):
 
     def reshaping_arrays(self, M1, M2, M3, M4):
         """   """
-        print(M1.shape[0])
         newMass = np.zeros((self.data_len, 4))
         newMass[:,0] = M1
         newMass[:,1] = M2
         newMass[:,2] = M3
         newMass[:,3] = M4
-        print(newMass.shape)
         return(newMass)
 
     def generate_bpm_data(self, phase, dataT, namp, bnamp):

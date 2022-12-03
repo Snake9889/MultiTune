@@ -166,12 +166,11 @@ class BPMDataAll(BPMTemplate):
     def reshaping_arrays(self, M1, M2, M3, M4):
         """   """
         newMass = np.zeros((M1.shape[0], 4))
-        print(M1.shape)
         newMass[:,0] = M1
         newMass[:,1] = M2
         newMass[:,2] = M3
         newMass[:,3] = M4
-        print(newMass.shape)
+        
         return(newMass)
 
     def everyting_ok(self, label):

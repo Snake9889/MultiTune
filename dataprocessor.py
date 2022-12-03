@@ -92,11 +92,7 @@ class DataProcessor(QObject):
         self.dataZ = data_decompositor.data_decomposed_Z
         self.dataI = data_decompositor.dataI
 
-
-        print(self.vect_num)
-        print(self.dataX.shape)
         self.data_to_process_X = self.dataX[ :, self.vect_num - 1]
-        print(self.data_to_process_X.shape)
         self.data_to_process_Z = self.dataZ[ :, self.vect_num - 1]
 
         # if self.type_to_process == 'X':
