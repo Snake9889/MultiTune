@@ -170,7 +170,7 @@ class DataProcessor(QObject):
         right_ind = math.ceil(self.data_len * self.right_bound)
 
         tmp_t = self.fftwT[left_ind: right_ind]
-        tmp_x = self.data[left_ind: right_ind]
+        tmp_x = data[left_ind: right_ind]
 
         if len(tmp_t) <= 1:
             tmp_t = self.fftwT[left_ind - 1: right_ind + 1]
