@@ -13,7 +13,6 @@ from statuswidget import StatusWidget
 class MainWindow(QMainWindow):
     """   """
     decomp_changed_str = pyqtSignal(str)
-    filter_changed_str = pyqtSignal(str)
     region_changed = pyqtSignal(object)
     filter_changed_str = pyqtSignal(str)
 
@@ -21,14 +20,12 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
-        self.ui = uic.loadUi(os.path.join(ui_path, 'MainWindow_new.ui'), self)
+        self.ui = uic.loadUi(os.path.join(ui_path, 'MainWindow.ui'), self)
 
         self.window_str = "None"
         self.filter_state = "None"
         self.bpm = bpm_name
 
-        # if self.bpm == "all":
-            # """ Replace one widget with another """
         old_statusWidget = self.statusWidget
         new_statusWidget = data_source.get_status_widget()
         new_statusWidget.setParent(self.centralwidget)
@@ -86,9 +83,6 @@ class MainWindow(QMainWindow):
 
         self.decompBox.currentIndexChanged.connect(self.on_decomp_changed)
         self.filterBox.stateChanged.connect(self.on_filter_checked)
-
-        #self.phase_widget = PhaseWidget(os.path.join(ui_path))
-        #self.phasebtn.clicked.connect(self.phase_widget.show)
 
         self.actionSave.triggered.connect(self.on_save_button)
         self.actionRead.triggered.connect(self.on_read_button)
@@ -328,15 +322,15 @@ class MainWindow(QMainWindow):
         self.sng2_rect = self.ui.plot_sng2.viewRange()
         settings = QSettings()
         settings.beginGroup(self.bpm)
+        settings.setValue("filter", self.filter_state)
+        settings.setValue("decomp", self.decomp_method)
         settings.beginGroup("Plots")
         settings.setValue("1_zoom", self.r1_rect)
         settings.setValue("2_zoom", self.r2_rect)
         settings.setValue("3_zoom", self.r3_rect)
         settings.setValue("4_zoom", self.r4_rect)
         settings.setValue("sng1_zoom", self.sng1_rect)
-        print(self.sng1_rect)
         settings.setValue("sng2_zoom", self.sng2_rect)
-        print(self.sng2_rect)
         settings.setValue('size', self.size())
         settings.setValue('pos', self.pos())
         settings.endGroup()
@@ -348,6 +342,8 @@ class MainWindow(QMainWindow):
         rect_def = [[0, 0.5], [0, 0.1]]
         settings = QSettings()
         settings.beginGroup(self.bpm)
+        self.filter_state = settings.value("filter", "None")
+        self.decomp_method = settings.value("decomp", "PCA")
         settings.beginGroup("Plots")
         self.r1_rect = settings.value("1_zoom", rect_def)
         self.r2_rect = settings.value("2_zoom", rect_def)
@@ -366,8 +362,8 @@ class MainWindow(QMainWindow):
         self.ui.plot4.setRange(xRange=self.r4_rect[0], yRange=self.r4_rect[1])
 
         self.ui.plot_sng1.setRange(xRange=self.sng1_rect[0], yRange=self.sng1_rect[1])
-        print(self.sng1_rect)
         self.ui.plot_sng2.setRange(xRange=self.sng2_rect[0], yRange=self.sng2_rect[1])
-        print(self.sng2_rect)
-        
 
+        self.decompBox.setCurrentText(self.decomp_method)
+        if self.filter_state == "Kalman":
+            self.filterBox.setChecked(True)

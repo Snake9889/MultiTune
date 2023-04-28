@@ -1,6 +1,7 @@
 
 from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSettings
 import numpy as np
+import random
 from BPM_template import BPMTemplate
 from statuswidget import StatusWidget
 
@@ -13,7 +14,7 @@ class BPMData(BPMTemplate):
 
         self.statusWidget = StatusWidget()
 
-        self.data_len = 1024
+        self.data_len = 128
 
         self.mu, self.sigma = 0, 1
         self.a0 = 1
@@ -87,7 +88,7 @@ class BPMData(BPMTemplate):
                 3* self.harmonic_oscillations(phase, dataT, self.a2, self.w2, namp)) + \
                 [x for x in bnamp*(np.random.normal(self.mu, self.sigma, self.data_len))]
 
-        dataI = np.ones(self.data_len)
+        dataI = self.current_generator(self.data_len)
 
         #dataX = dataX + 0.3 * np.random.normal(size=self.data_len)  # 30% noise
         #dataZ = dataZ + 0.4 * np.random.normal(size=self.data_len)  # 10% noise
@@ -98,6 +99,17 @@ class BPMData(BPMTemplate):
         osc = (amp1 + amp2*(np.random.normal(self.mu, self.sigma, self.data_len)))*np.sin(2 * np.pi * freq * dataT + 2 * np.pi * phase)
 
         return(osc)
+
+    def current_generator(self, num):
+        """   """
+        I = np.zeros(num)
+        point = random.randint(0, num)
+        for i in range(num):
+            if i < point:
+                I[i] = 0.5 - 0.1*random.random()
+            else:
+                I[i] = 5 + 0.5 - 0.1*random.random()
+        return(I)
 
     def force_data_ready(self, signature):
         """   """

@@ -37,7 +37,7 @@ class BPMDataAll(BPMTemplate):
         self.no_data(self.statusWidget.status_3)
         self.no_data(self.statusWidget.status_4)
 
-        self.bpm = bpm
+        self.bpm = bpm_name
         self.BPM1 = BPMData("bpm01")
         self.BPM2 = BPMData("bpm02")
         self.BPM3 = BPMData("bpm03")

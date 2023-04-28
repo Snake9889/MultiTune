@@ -79,15 +79,14 @@ class DataDecompositor(QObject):
 
     def filter(self, sig):
         """   """
+        print(sig, 'sig')
         filtered_sig = np.empty([sig.shape[0], sig.shape[1]])
         for i in range (sig.shape[1]):
-            print(i)
             adc_sig = self.filtration(np.take(sig,i,axis=1))
             #filtered_sig = np.append(filtered_sig, adc_sig, axis=1)
             filtered_sig[:, [i]] = adc_sig
-            print(sig-filtered_sig)
         
-        print(sig.shape, filtered_sig.shape)
+        print(sig-filtered_sig, 'diff!!!')
         return (filtered_sig)
 
 
@@ -99,7 +98,6 @@ class DataDecompositor(QObject):
         self.dataX = data_source.dataX
         self.dataZ = data_source.dataZ
         self.dataI = data_source.dataI
-        print(self.dataX)
 
         if self.filter_state == "None":
             pass
@@ -113,13 +111,6 @@ class DataDecompositor(QObject):
         self.dataX = self.vect_multiplication(data_source.dataX)
         self.dataZ = self.vect_multiplication(data_source.dataZ)
         self.dataI = self.vect_multiplication(data_source.dataI)
-
-        # if self.type_to_process == 'X':
-            # self.data_to_process = self.dataX
-        # elif self.type_to_process == 'Z':
-            # self.data_to_process = self.dataZ
-        # else:
-            # return
 
         if self.method == "PCA":
             self.data_decomposed_X = self.SVD(self.dataX)

@@ -22,12 +22,11 @@ class ControlWidget(QWidget):
         super(ControlWidget, self).__init__(parent)
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
-        self.ui = uic.loadUi(os.path.join(ui_path, 'ControlWidget_new.ui'), self)
+        self.ui = uic.loadUi(os.path.join(ui_path, 'ControlWidget.ui'), self)
 
         argument_parser = TerminalParser()
 
         self.window = "None"
-        self.decomp_method = "PCA"
         self.method = argument_parser.method_name_parsed
         #self.v1 = argument_parser.v1_parsed
 
@@ -35,6 +34,7 @@ class ControlWidget(QWidget):
         self.boards = None
         self.lboard = 0.01
         self.rboard = 0.5
+        self.vect_num = 1
         self.scale = "None"
 
         self.str_id = self.default_str_id
@@ -77,7 +77,7 @@ class ControlWidget(QWidget):
 
     def on_sing_vect_changed(self, value):
         """   """
-        print(value)
+        self.vect_num = value
         self.vector_changed_int.emit(value)
 
     def on_method_checked(self, state):
@@ -150,6 +150,7 @@ class ControlWidget(QWidget):
         settings.setValue("method", self.method)
         settings.setValue("lboard", self.lboard)
         settings.setValue("rboard", self.rboard)
+        settings.setValue("vect_num", self.vect_num)
         settings.setValue("scale", self.scale)
         settings.endGroup()
         print("Saved!!!!!")
@@ -166,6 +167,7 @@ class ControlWidget(QWidget):
             self.method = settings.value("method", "None")
             self.lboard = settings.value("lboard", 0.10, type=float)
             self.rboard = settings.value("rboard", 0.25, type=float)
+            self.vect_num = settings.value("vect_num", 1, type=int)
             self.scale = settings.value("scale", "Normal")
             settings.endGroup()
             settings.endGroup()
@@ -177,6 +179,7 @@ class ControlWidget(QWidget):
             self.method = settings.value("method", "Peak")
             self.lboard = settings.value("lboard", 0.10, type=float)
             self.rboard = settings.value("rboard", 0.30, type=float)
+            self.vect_num = settings.value("vect_num", 2, type=int)
             self.scale = settings.value("scale", "Normal")
             settings.endGroup()
             settings.endGroup()
@@ -195,6 +198,7 @@ class ControlWidget(QWidget):
 
         self.lboardSBox.setValue(self.lboard)
         self.rboardSBox.setValue(self.rboard)
+        self.singularSBox.setValue(self.vect_num)
 
         if self.method == "Peak":
             self.usePeakBtn.setChecked(True)

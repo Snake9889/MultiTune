@@ -42,16 +42,9 @@ if __name__ == "__main__":
         from datasources_all import BPMDataAll
         data_source = BPMDataAll()
 
-    # else:
-        # from datasources_bpm import BPMData
-        # data_source = BPMData(bpm_name=bpm_name_parsed)
-
-    # if data_source is None:
-        # print("Data source doesn't exists!!! You can't use this program!!!")
-        # exit()
-
-
-    #data_source = BPMDataAll()
+    if data_source is None:
+        print("Data source doesn't exists!!! You can't use this program!!!")
+        exit()
 
     data_decompositor = DataDecompositor()
     data_proc_1 = DataProcessor(v1_num_parsed)
@@ -73,9 +66,6 @@ if __name__ == "__main__":
     data_source.data_ready.connect(data_decompositor.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_1.on_data_recv)
     data_decompositor.data_decomposed.connect(data_proc_2.on_data_recv)
-
-    # data_source.data_ready.connect(data_proc_X.on_data_recv)
-    # data_source.data_ready.connect(data_proc_Z.on_data_recv)
 
     data_proc_1.data_processed.connect(mw.on_freq_status_1)
     data_proc_2.data_processed.connect(mw.on_freq_status_2)
