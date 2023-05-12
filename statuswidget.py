@@ -11,7 +11,7 @@ class StatusWidget(QWidget):
     """   """
 
     def __init__(self, parent=None):
-        super(StatusWidget, self).__init__(parent)
+        super().__init__(parent)
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
         self.ui = uic.loadUi(os.path.join(ui_path, 'StatusWidget.ui'), self)

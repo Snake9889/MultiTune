@@ -13,7 +13,7 @@ class DataDecompositor(QObject):
     data_decomposed = pyqtSignal(object)
 
     def __init__(self, data_len=1024, parent=None):
-        super(DataDecompositor, self).__init__(parent)
+        super().__init__(parent)
 
         self.data_len = data_len
 

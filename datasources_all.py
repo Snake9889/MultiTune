@@ -19,7 +19,7 @@ class BPMDataAll(BPMTemplate):
     istart_work = (0, 0, 0, 0)
 
     def __init__(self, bpm_name='', parent=None):
-        super(BPMDataAll, self).__init__("bpm_all", parent)
+        super().__init__("bpm_all", parent)
 
         self.hash = [0, 0, 0, 0]
         self.l = [0, 0, 0, 0]
