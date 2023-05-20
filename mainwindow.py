@@ -34,19 +34,6 @@ class MainWindow(QMainWindow):
         old_statusWidget.deleteLater()
         self.statusWidget = new_statusWidget
 
-        # else:
-            # """ Creating phase button """
-            # old_Widget = self.statusWidget
-            # self.phasebtn = QPushButton('Phase', self)
-            # self.phasebtn.setCheckable(True)
-            # self.phasebtn.setStyleSheet("QPushButton:checked {color: black; background-color: green;}")
-
-            # self.phase_widget = PhaseWidget(os.path.join(ui_path))
-            # self.phasebtn.clicked.connect(self.phase_widget.show)
-
-            # self.ui.verticalLayout.replaceWidget(old_Widget, self.phasebtn)
-            # old_Widget.deleteLater()
-
         self.images_list = []
         self.r1_rect = None
         self.r2_rect = None

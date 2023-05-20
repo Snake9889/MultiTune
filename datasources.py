@@ -1,5 +1,5 @@
 
-from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSettings
+from PyQt5.QtCore import QTimer, QSettings
 import numpy as np
 import random
 from BPM_template import BPMTemplate
