@@ -3,12 +3,13 @@
 from PyQt5.QtCore import QCoreApplication, QSettings, QSize
 from PyQt5.QtGui import QIcon
 import signal
-from mainwindow import *
-from datadecompositor import DataDecompositor
-from dataprocessor import DataProcessor
-from settingscontrol import SettingsControl
-from command_parser import TerminalParser
-from datasources_all import BPMDataAll
+from MultiTune.Modules.MainWindow.mainwindow import *
+from MultiTune.Modules.datadecompositor import DataDecompositor
+from MultiTune.Modules.dataprocessor import DataProcessor
+from MultiTune.Modules.settingscontrol import SettingsControl
+from MultiTune.Modules.command_parser import TerminalParser
+from MultiTune.Modules.DataSources.datasources_all import BPMDataAll
+from MultiTune.Modules.DataSources.datasources import BPMData
 
 pg.setConfigOption('background', 'w')
 pg.setConfigOption('foreground', 'k')
@@ -35,11 +36,10 @@ if __name__ == "__main__":
     data_source = None
 
     if bpm_name_parsed == "model":
-        from datasources import BPMData
         data_source = BPMData()
 
     elif bpm_name_parsed == "all":
-        from datasources_all import BPMDataAll
+        # from datasources_all import BPMDataAll
         data_source = BPMDataAll()
 
     if data_source is None:

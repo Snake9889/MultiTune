@@ -3,7 +3,7 @@
 from PyQt5.QtCore import pyqtSignal, Qt, QObject, QTimer
 import numpy as np
 import math
-from command_parser import TerminalParser
+from MultiTune.Modules.command_parser import TerminalParser
 
 
 class DataProcessor(QObject):

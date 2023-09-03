@@ -2,8 +2,8 @@
 from PyQt5.QtCore import QTimer, QSettings
 import numpy as np
 import random
-from BPM_template import BPMTemplate
-from statuswidget import StatusWidget
+from MultiTune.Modules.DataSources.BPM_template import BPMTemplate
+from MultiTune.Modules.MainWindow.StatusWidget.statuswidget import StatusWidget
 
 
 class BPMData(BPMTemplate):

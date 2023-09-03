@@ -5,9 +5,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt5.QtCore import pyqtSignal, QRectF, Qt, QSettings, QSize, QPoint
 from PyQt5 import uic
 import pyqtgraph as pg
-from helpwidget import HelpWidget
-#from phasewidget import PhaseWidget
-from statuswidget import StatusWidget
+from MultiTune.Modules.MainWindow.helpwidget import HelpWidget
+from MultiTune.Modules.MainWindow.StatusWidget.statuswidget import StatusWidget
 
 
 class MainWindow(QMainWindow):

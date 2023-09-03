@@ -5,7 +5,7 @@ from sklearn.decomposition import FastICA
 import numpy as np
 import numpy.linalg as lg
 import math
-from command_parser import TerminalParser
+from MultiTune.Modules.command_parser import TerminalParser
 
 
 class DataDecompositor(QObject):
@@ -66,7 +66,7 @@ class DataDecompositor(QObject):
         self.Accumulated_Error = ((1 - H)*Old_Error_All**2)**(1/2)
         # Новое значение становится старым значением
         self.kalman_adc_old = kalman_adc
-        
+
         return (kalman_adc)
 
     def filtration(self, sig):
@@ -85,7 +85,7 @@ class DataDecompositor(QObject):
             adc_sig = self.filtration(np.take(sig,i,axis=1))
             #filtered_sig = np.append(filtered_sig, adc_sig, axis=1)
             filtered_sig[:, [i]] = adc_sig
-        
+
         print(sig-filtered_sig, 'diff!!!')
         return (filtered_sig)
 
@@ -115,7 +115,7 @@ class DataDecompositor(QObject):
         if self.method == "PCA":
             self.data_decomposed_X = self.SVD(self.dataX)
             self.data_decomposed_Z = self.SVD(self.dataZ)
-            
+
         elif self.method == "ICA":
             np.random.seed(0)
             self.data_decomposed_X = self.ICA(self.dataX)

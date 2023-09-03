@@ -2,9 +2,9 @@
 #
 from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSettings
 import numpy as np
-from BPM_template import BPMTemplate
-from datasources_bpm import BPMData
-from statuswidget import StatusWidget
+from MultiTune.Modules.DataSources.BPM_template import BPMTemplate
+from MultiTune.Modules.DataSources.datasources_bpm import BPMData
+from MultiTune.Modules.MainWindow.StatusWidget.statuswidget import StatusWidget
 
 class BPMDataAll(BPMTemplate):
     """   """
@@ -25,7 +25,7 @@ class BPMDataAll(BPMTemplate):
         self.l = [0, 0, 0, 0]
         self.istart = [1, 1, 1, 1]
         self.particles = "e+"
-        
+
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.on_timer_update)
@@ -170,7 +170,7 @@ class BPMDataAll(BPMTemplate):
         newMass[:,1] = M2
         newMass[:,2] = M3
         newMass[:,3] = M4
-        
+
         return(newMass)
 
     def everyting_ok(self, label):
