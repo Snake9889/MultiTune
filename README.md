@@ -1,2 +1,2 @@
 # MultiTune
-# BINP programm based on ICA, PCA and some else
+# Programm based on ICA, PCA and some else
